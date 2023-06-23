@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El verdadero Final</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .enterButton {
+      background-color: transparent;
+      border: 2px solid #0f0;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+      margin-top: 10px;
+    }
+
+    .enterButton:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
+    }
+
+    .error {
+      color: #f00;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .passwordInput {
+      border: none;
+      border-bottom: 2px solid #0f0;
+      border-radius: 0;
+      padding: 8px 16px;
+      font-size: 16px;
+      color: #fff;
+      background-color: transparent;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.6);
+      margin-bottom: 10px;
+    }
+
+    .newView {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .loadingTitle {
+      font-size: 36px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0px 0px 8px #0f0;
+      margin-bottom: 10px;
+    }
+
+    .percentageCounter {
+      font-size: 24px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      color: #0f0; /* Color verde brillante */
+      margin-top: 10px;
+    }
+
+    video {
+      width: 50%;
+      max-height: 50vh;
+      margin-top: 20px;
+      pointer-events: auto;
+    }
+
+    .vaultImage {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 150px;
+      z-index: 999;
+    }
+
+    .vaultTitle {
+      font-size: 24px;
+      color: #0f0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0px 0px 8px #0f0;
+      z-index: 999;
+    }
+
+    .verse {
+      font-size: 18px;
+      color: #0f0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      95% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input id="passwordInput" class="passwordInput" type="password" placeholder="Ingresa la contraseña" autofocus>
+    <button id="enterButton" class="enterButton">Ingresar</button>
+    <div class="error hidden">Contraseña incorrecta</div>
+  </div>
+
+  <div id="newView" class="newView hidden">
+    <img src="shine.png" class="vaultImage" alt="Imagen de la Bóveda de Frobish">
+    <h1 class="vaultTitle">La Bóveda de la Corporacion</h1>
+    <div class="loadingTitle">Cargando nueva realidad...</div>
+    <div class="percentageCounter hidden">0%</div>
+    <video id="videoPlayer" class="hidden" controls></video>
+    <h2 class="verse hidden">Apocalipsis 11:3-12</h2><br>
+    <h2 class="verse hidden">"Y daré a mis dos testigos que profeticen por mil doscientos sesenta días, vestidos de cilicio."</h2>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const enterButton = document.getElementById('enterButton');
+      const passwordInput = document.getElementById('passwordInput');
+      const errorText = document.querySelector('.error');
+      const newView = document.getElementById('newView');
+      const loadingTitle = document.querySelector('.loadingTitle');
+      const percentageCounter = document.querySelector('.percentageCounter');
+      const verse = document.querySelector('.verse');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const container = document.querySelector('.container');
+
+      enterButton.addEventListener('click', () => {
+        const password = passwordInput.value.toLowerCase();
+        if (password === 'tiempo') {
+          container.classList.add('hidden');
+          newView.classList.remove('hidden');
+
+          loadingTitle.classList.remove('hidden');
+          percentageCounter.classList.remove('hidden');
+
+          let currentProgress = 0;
+          const progressInterval = setInterval(() => {
+            currentProgress += 2;
+            percentageCounter.textContent = `${currentProgress}%`;
+
+            if (currentProgress >= 100) {
+              clearInterval(progressInterval);
+              loadingTitle.classList.add('hidden');
+              percentageCounter.classList.add('hidden');
+              verse.classList.remove('hidden');
+              videoPlayer.classList.remove('hidden');
+              videoPlayer.src = 'La Corporacion.mp4'; // Reemplaza "URL_DEL_VIDEO" por la URL de tu video
+              videoPlayer.removeAttribute('autoplay'); // Desactiva la reproducción automática
+              videoPlayer.volume = 0.5; // Establece el volumen en 50%
+              videoPlayer.addEventListener('contextmenu', event => event.preventDefault()); // Activa el menú contextual del reproductor
+            }
+          }, 100);
+        } else {
+          errorText.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
